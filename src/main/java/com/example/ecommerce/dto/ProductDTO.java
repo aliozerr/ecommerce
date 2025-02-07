@@ -19,4 +19,5 @@ public class ProductDTO {
     @PositiveOrZero(message = "Cannot be negative")
     private Integer quality;
     private List<CommentDTO> comments;
+    private String image;
 }

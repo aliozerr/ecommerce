@@ -10,10 +10,10 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
 
-    @Mapping(target ="productId" ,source = "product.id")
+    @Mapping(target ="image" ,source = "image")
     ProductDTO toDto(Product product);
 
-    @Mapping(target = "product.id",source = "productId")
+    @Mapping(target = "image",source = "image")
     Product toEntity(ProductDTO productDTO);
 
 
