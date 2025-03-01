@@ -20,7 +20,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    private User registerUser(User user){
+    public User registerUser(User user){
         if(userRepository.findByEmail(user.getEmail()).isPresent()){
             throw new IllegalArgumentException("Email already taken");
         }
@@ -33,12 +33,14 @@ public class UserService {
         return userRepository.findByEmail(email).orElseThrow(()->new ResourceNotFoundException("User not found"));
     }
 
-    public  void changePassword(String email, ChangePasswordRequest request){
-        User user = getUserByEmail(email);
-        if(!passwordEncoder.matches(request.getCurrentPassword(),user.getPassword())){
-            throw new BadCredentialsException("Current password is incorrect");
+    public void changePassword(String email, ChangePasswordRequest request) {
+        User user = (User) getUserByEmail(email); // Cast to User if needed
+        if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("Current password is incorrect");
         }
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         userRepository.save(user);
     }
+
+
 }

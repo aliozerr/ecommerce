@@ -34,20 +34,23 @@ public class SecurityConfig {
     }
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf ->csrf.disable())
-                .authorizeHttpRequests(auth->auth
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/").permitAll()
-                        .requestMatchers("/images").permitAll()
+                        .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/index.html").permitAll()
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/products/**").permitAll()
-                        .requestMatchers("/api/auth/change-password").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
+                        .requestMatchers("/api/auth/login", "/api/auth/register").permitAll() // Public endpoints
+                        .requestMatchers("/api/auth/change-password").authenticated() // Secure this endpoint
+                        .requestMatchers("/api/auth/**").permitAll() // Keep this last
                         .anyRequest().authenticated()
-                ).sessionManagement(session ->session
+                )
+                .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                ).addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                )
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
