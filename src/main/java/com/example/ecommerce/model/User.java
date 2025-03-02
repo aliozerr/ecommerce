@@ -85,4 +85,43 @@ public class User implements UserDetails {
         USER, ADMIN
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public boolean isEmailConfirmation() {
+        return emailConfirmation;
+    }
+
+    public void setEmailConfirmation(boolean emailConfirmation) {
+        this.emailConfirmation = emailConfirmation;
+    }
+
+    public String getConfirmationCode() {
+        return confirmationCode;
+    }
+
+    public void setConfirmationCode(String confirmationCode) {
+        this.confirmationCode = confirmationCode;
+    }
 }
