@@ -10,8 +10,8 @@ public class CommentDTO {
     private Long id;
     @NotBlank(message = "Content is required")
     private String content;
-    @Min(value = 1)
-    @Max(value = 5)
+    @Min(value=1)
+    @Max(value=5)
     private Integer score;
     private Long userId;
 

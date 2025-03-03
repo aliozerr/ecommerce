@@ -23,7 +23,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
-    private static final String UPLOAD_DIR = "/src/main/resources/static/images/";
+    private static final String UPLOAD_DIR = "temp/images/";
     @Autowired
     public ProductService(ProductRepository productRepository, ProductMapper productMapper) {
         this.productRepository = productRepository;
@@ -82,5 +82,4 @@ public class ProductService {
         Files.write(path,image.getBytes());
         return fileName;
     }
-
 }
