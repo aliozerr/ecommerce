@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +21,17 @@ public class CartItem {
     private Product product;
 
     private Integer quantity;
+
+    public CartItem(Long id, Cart cart, Product product, Integer quantity) {
+        this.id = id;
+        this.cart = cart;
+        this.product = product;
+        this.quantity = quantity;
+    }
+
+    public CartItem() {
+
+    }
 
     public Long getId() {
         return id;
