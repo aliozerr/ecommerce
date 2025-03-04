@@ -9,8 +9,7 @@ import java.math.BigDecimal;
 
 @Data
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +25,17 @@ public class OrderItem {
 
     private Integer quantity;
     private BigDecimal price;
+
+    public OrderItem(Long id, Order order, Product product, Integer quantity, BigDecimal price) {
+        this.id = id;
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    public OrderItem() {
+    }
 
     public Long getId() {
         return id;
