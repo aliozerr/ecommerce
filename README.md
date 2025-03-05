@@ -38,6 +38,7 @@ This is a full-stack e-commerce application built using Spring Boot, providing c
 - `/api/products` - Product Management
 - `/api/cart` - Shopping Cart
 - `/api/orders` - Order Processing
+- ...
 
 ## Security
 - JWT-based authentication
