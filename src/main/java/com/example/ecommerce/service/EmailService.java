@@ -1,6 +1,7 @@
 package com.example.ecommerce.service;
 
 import com.example.ecommerce.model.Order;
+import com.example.ecommerce.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -28,4 +29,12 @@ public class EmailService {
         mailSender.send(message);
     }
 
+    public  void sendConfirmationCode(User user){
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(fromEmail);
+        message.setTo(user.getEmail());
+        message.setSubject("Confirm your email");
+        message.setText("Please confirm your email by entering this code: " + user.getConfirmationCode());
+        mailSender.send(message);
+    }
 }

@@ -10,14 +10,18 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, EmailService emailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
     }
 
     public User registerUser(User user){
@@ -26,6 +30,9 @@ public class UserService {
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(User.Role.USER);
+        user.setConfirmationCode(generateConfirmationCode());
+        user.setEmailConfirmation(false);
+        emailService.sendConfirmationCode(user);
         return userRepository.save(user);
     }
 
@@ -42,5 +49,20 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public  void confirmEmail(String email, String confirmationCode){
+        User user = getUserByEmail(email);
+        if(user.getConfirmationCode().equals(confirmationCode)){
+            user.setEmail(email);
+            user.setConfirmationCode(null);
+        }
+        else {
+            throw  new BadCredentialsException("Invalid confirmation code");
+        }
+    }
 
+    public  String generateConfirmationCode(){
+        Random random = new Random();
+        int code = 100000+ random.nextInt(900000);
+        return String.valueOf(code);
+    }
 }
